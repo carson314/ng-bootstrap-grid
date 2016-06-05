@@ -6,6 +6,7 @@
     <script src="../lib/lodash/lodash.js"></script>
     <script src="../dist/ng-bootstrap-expand-grid.js"></script>
     <script src="../dist/ng-grid-compiler.js"></script>
+	<script src="../lib/angularUtils-pagination/dirPagination.js"></script>
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="../dist/css/ng-bootstrap-grid.css">
     <style>
@@ -36,6 +37,7 @@
     myApp.controller('MyController', ['$scope', function($scope) {
         $scope.gridOptions = {
             enableExpand: true,
+			templatePagination:'app/components/page/pagination.template.html',
             enableRowSelection: true,
             enableSingleExpand: true,
             expandableRowTemplate: 'expandForm.html',

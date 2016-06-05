@@ -1,4 +1,4 @@
-angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile'])
+angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils.directives.dirPagination'])
     .directive('expandGrid', [function() {
         return {
             restrict: 'E',
@@ -110,8 +110,9 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile'])
                 }
             },
             template:
+            "<div>\n" +
             "<div class='table-responsive'>\n" +
-            "   <table class='table table-bordered table-hover expand-table-striped ep-grid' style='table-layout:fixed;'>\n" +
+            "   <table class='table m-b-0' style='table-layout:fixed;'>\n" +
             "       <thead>\n" +
             "           <tr>\n" +
             "               <th ng-if='options.enableRowSelection' class='grid-checkbox-cell'>" +
@@ -139,6 +140,8 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile'])
             "           </tr>\n" +
             "       </tbody>\n" +
             "   </table>\n" +
+            "</div>\n"+
+            "<dir-pagination-controls boundary-links='false' template-url='options.templatePagination'></dir-pagination-controls>\n"+
             "</div>\n"
         }
     }]);
