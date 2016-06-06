@@ -10,7 +10,8 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
       scope: {
         options: '=',
         onSelect: '=',
-        onExpand: '='
+        onExpand: '=',
+        tagFilter: '=filter'
       },
       link : function (scope, element, attrs) {
         scope.appScope = scope.$parent;
@@ -37,13 +38,13 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
         scope.$on('changeData',function(event, data){
           scope.initData();
         });
-        scope.selectAll = function(isSelectAll) { 
+        scope.selectAll = function(isSelectAll) {
           _.forEach(scope.rows, function(row) {
             row.item.selection = isSelectAll;
           });
           scope.selectAllFlag = isSelectAll;
         };
-        scope.selectRow = function(row) { 
+        scope.selectRow = function(row) {
           if (scope.onSelect) {
             scope.onSelect(row);
           }
@@ -55,7 +56,7 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
         };
         scope.expandClick = function(clickedRow) {
           if(scope.options.enableExpand) {
-            if(scope.options.enableSingleExpand) { 
+            if(scope.options.enableSingleExpand) {
               _.forEach(scope.rows, function(row) {
                 if(row != clickedRow) {
                   row.expand = false;
@@ -72,7 +73,7 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
           var selectedRows = [];
           _.forEach(scope.rows, function(row) {
             if(row.item.selection) {
-              selectedRows.push(row); 
+              selectedRows.push(row);
             }
           });
           return selectedRows;
@@ -127,7 +128,7 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
       "               </th>\n" +
       "           </tr>\n" +
       "       </thead>\n" +
-      "       <tbody dir-paginate='row in rows | itemsPerPage: options.pagesize'>\n" +
+      "       <tbody dir-paginate='row in rows | filter:tagFilter | itemsPerPage: options.pagesize'>\n" +
       "           <tr  ng-dblclick='row.expand=!row.expand;expandClick(row)'>\n" +
       "               <td ng-if='options.enableRowSelection' class='grid-checkbox-cell'><input type='checkbox' ng-model='row.item.selection'  ng-disabled='row.item.readonly'></td>" +
       "               <td ng-repeat='col in columns' style='word-break:break-all;'>\n" +
