@@ -4,6 +4,9 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
       restrict: 'E',
       replace: true,
       priority : 10,
+      controller:"@",
+      controllerAs:"vm",
+      name:"controllerName",
       scope: {
         options: '=',
         onSelect: '=',
@@ -31,18 +34,16 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
           /*console.log(JSON.stringify(scope.rows, null, '\t'));*/
         };
         scope.initData();
-        scope.$on('changeData',function(event, data){ 
+        scope.$on('changeData',function(event, data){
           scope.initData();
         });
-        scope.selectAll = function(isSelectAll) {
-          console.log(isSelectAll);
+        scope.selectAll = function(isSelectAll) { 
           _.forEach(scope.rows, function(row) {
             row.item.selection = isSelectAll;
           });
           scope.selectAllFlag = isSelectAll;
         };
-        scope.selectRow = function(row) {
-          console.log('select a row.');
+        scope.selectRow = function(row) { 
           if (scope.onSelect) {
             scope.onSelect(row);
           }
@@ -51,10 +52,10 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
             return row.selection==false || row.selection==null;
           });
           scope.selectAllFlag = (uncheckedRow==null);
-        }
+        };
         scope.expandClick = function(clickedRow) {
           if(scope.options.enableExpand) {
-            if(scope.options.enableSingleExpand) {
+            if(scope.options.enableSingleExpand) { 
               _.forEach(scope.rows, function(row) {
                 if(row != clickedRow) {
                   row.expand = false;
@@ -66,16 +67,16 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
               scope.onExpand(clickedRow);
             }
           }
-        }
+        };
         scope.getSelectedRows = function() {
           var selectedRows = [];
           _.forEach(scope.rows, function(row) {
             if(row.item.selection) {
-              selectedRows.push(row);
+              selectedRows.push(row); 
             }
           });
           return selectedRows;
-        }
+        };
         scope.getUrlTemplate = function () {
           return scope.options.expandableRowTemplate;
         };
@@ -128,14 +129,14 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
       "       </thead>\n" +
       "       <tbody dir-paginate='row in rows | itemsPerPage: options.pagesize'>\n" +
       "           <tr  ng-dblclick='row.expand=!row.expand;expandClick(row)'>\n" +
-      "               <td ng-if='options.enableRowSelection' class='grid-checkbox-cell'><input type='checkbox' ng-model='row.item.selection' ng-click='selectRow(row)' ng-disabled='row.item.readonly'></td>" +
+      "               <td ng-if='options.enableRowSelection' class='grid-checkbox-cell'><input type='checkbox' ng-model='row.item.selection'  ng-disabled='row.item.readonly'></td>" +
       "               <td ng-repeat='col in columns' style='word-break:break-all;'>\n" +
       "                   <div ng-if='col.cellTemplate' compile='col.cellTemplate' cell-template-scope='col.cellTemplateScope'></div>\n" +
       "                   <div ng-if='!col.cellTemplate' style='display:inline;float:left;'>{{ row.item[col.field] }}</div>\n" +
-      "                   <div ng-if='options.enableExpand && $index == maxColumnNum' class='pull-right' style='display:inline;float:left;'><i class='glyphicon' ng-click='row.expand=!row.expand;expandClick(row)' ng-class='{\"glyphicon-chevron-down\": row.expand, \"glyphicon-chevron-right\": !row.expand}' style='cursor:pointer;'></i></div>" +
+      "                   <div ng-if='options.enableExpand && $index == maxColumnNum' class='pull-right' style='display:inline;float:left;' ng-click='selectRow(row)'><i class='glyphicon' ng-click='row.expand=!row.expand;expandClick(row)' ng-class='{\"glyphicon-chevron-down\": row.expand, \"glyphicon-chevron-right\": !row.expand}' style='cursor:pointer;'></i></div>" +
       "               </td>\n" +
       "           </tr>\n" +
-      "           <tr ng-show='row.expand' ng-if='options.enableExpand' class='expand-form-tr'>" +
+      "           <tr ng-show='row.expand' ng-if='options.enableExpand'  class='expand-form-tr'>" +
       "               <td colspan='{{columnNumber}}'>" +
       "                   <div ng-include=\"row.expandTemplate\"></div>" +
       "               </td>\n" +
