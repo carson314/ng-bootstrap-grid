@@ -31,7 +31,9 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
           /*console.log(JSON.stringify(scope.rows, null, '\t'));*/
         };
         scope.initData();
-
+        scope.$on('changeData',function(event, data){ 
+          scope.initData();
+        });
         scope.selectAll = function(isSelectAll) {
           console.log(isSelectAll);
           _.forEach(scope.rows, function(row) {
@@ -107,7 +109,7 @@ angular.module('ng-bootstrap-expand-grid', ['ng-bootstrap-compile','angularUtils
               });
             }
           });
-        } 
+        }
       },
       template:
       "<div>\n" +
